@@ -2,7 +2,7 @@ package ru.geekbrains.java2.lesson1;
 
 import java.awt.*;
 
-public class Background extends Sprite {
+public class Background {
     private float cR;
     private float cG;
     private float cB;
@@ -16,7 +16,6 @@ public class Background extends Sprite {
         vB = (float)(10f + (Math.random() * 20f));
     }
 
-    @Override
     public void update(GameCanvas canvas, float deltaTime) {
         cR += vR * deltaTime;
         cG += vG * deltaTime;
@@ -30,7 +29,6 @@ public class Background extends Sprite {
 
     }
 
-    @Override
     public void render(GameCanvas canvas, Graphics g) {
         canvas.setBackground(new Color ((int)cR,(int)cG,(int)cB));
     }

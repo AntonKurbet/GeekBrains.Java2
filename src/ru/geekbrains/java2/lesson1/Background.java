@@ -2,7 +2,7 @@ package ru.geekbrains.java2.lesson1;
 
 import java.awt.*;
 
-public class Background {
+public class Background extends Sprite {
     private float cR;
     private float cG;
     private float cB;

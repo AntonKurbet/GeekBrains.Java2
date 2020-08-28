@@ -2,7 +2,7 @@ package ru.geekbrains.java2.lesson1;
 
 import java.awt.*;
 
-public class Sprite {
+public abstract class Sprite {
     protected float x;
     protected float y;
     protected float halfWidth;
@@ -39,6 +39,7 @@ public class Sprite {
         return 2f * halfHeight;
     }
 
-    public void update(GameCanvas canvas, float deltaTime) {}
-    public void render(GameCanvas canvas, Graphics g) {}
+    public abstract void update(GameCanvas canvas, float deltaTime);
+
+    public abstract void render(GameCanvas canvas, Graphics g);
 }

@@ -13,13 +13,6 @@ public class GameCanvas extends JPanel {
     GameCanvas(GameController controller) {
         this.controller = controller;
         lastFrameTime = System.nanoTime();
-        addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                super.mouseReleased(e);
-                onClick(e);
-            }
-        });
     }
 
     @Override
@@ -41,13 +34,5 @@ public class GameCanvas extends JPanel {
     public int getRight() { return getWidth() - 1; }
     public int getTop() { return 0; }
     public int getBottom() { return getHeight() - 1; }
-
-    private void onClick(MouseEvent e) {
-        switch (e.getButton()) {
-            case MouseEvent.BUTTON1: controller.addBall();
-                break;
-            case MouseEvent.BUTTON3: controller.deleteBall();
-        }
-    }
 
 }

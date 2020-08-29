@@ -3,19 +3,15 @@ package ru.geekbrains.java2.lesson1;
 import java.awt.*;
 
 public class GameController {
-    int numOfBalls = 10;
-    static final int MAX_BALLS = 100;
-    Sprite[] sprites = new Sprite[MAX_BALLS];
-    Background back = new Background();
+    int numOfBalls = 1;
+    Sprite[] sprites = new Sprite[10];
 
     GameController() {
         initApplication();
     }
     private void initApplication() {
-        for (int i = 0; i < numOfBalls; i++) {
-            sprites[i] = new Ball();
-        }
-    }
+        sprites[0] = new Background();
+     }
 
     public void onDrawFrame(GameCanvas canvas, Graphics g, float deltaTime) {
         update(canvas, deltaTime);
@@ -23,30 +19,27 @@ public class GameController {
     }
 
     private void update(GameCanvas canvas, float deltaTime) {
-        back.update(canvas, deltaTime);
         for (int i = 0; i < numOfBalls; i++) {
             sprites[i].update(canvas, deltaTime);
         }
     }
 
     private void render(GameCanvas canvas, Graphics g) {
-        back.render(canvas, g);
         for (int i = 0; i < numOfBalls; i++) {
             sprites[i].render(canvas, g);
         }
     }
 
-    public void addBall() {
-        if (numOfBalls < MAX_BALLS) {
-            sprites[numOfBalls] = new Ball();
-            numOfBalls++;
+    public void addSprite(Sprite s) {
+        if (numOfBalls == sprites.length) {
+            Sprite[] temp = new Sprite[sprites.length * 2];
+            System.arraycopy(sprites,0,temp,0,sprites.length);
+            sprites = temp;
         }
+        sprites[numOfBalls++] = s;
     }
 
-    public void deleteBall() {
-        if (numOfBalls > 0) {
-            sprites[numOfBalls] = null;
-            numOfBalls--;
-        }
+    public void deleteSprite() {
+        if (numOfBalls > 1) numOfBalls--;
     }
 }

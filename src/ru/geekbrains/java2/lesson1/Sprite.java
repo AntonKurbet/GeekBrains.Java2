@@ -8,6 +8,8 @@ public abstract class Sprite {
     protected float halfWidth;
     protected float halfHeight;
 
+    Sprite() {}
+
     protected float getLeft() {
         return x - halfWidth;
     }

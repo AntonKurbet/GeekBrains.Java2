@@ -7,6 +7,12 @@ public class Ball extends Sprite {
     private float vX;
     private float vY;
 
+    Ball(float x, float y) {
+        this();
+        this.x = x;
+        this.y = y;
+    }
+
     Ball() {
         halfWidth = 20 + (float) (Math.random() * 50f);
         halfHeight = halfWidth;

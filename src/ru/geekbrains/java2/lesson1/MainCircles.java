@@ -42,7 +42,7 @@ public class MainCircles extends JFrame {
 
     private void onClick(MouseEvent e) {
         switch (e.getButton()) {
-            case MouseEvent.BUTTON1: controller.addSprite(new Ball());
+            case MouseEvent.BUTTON1: controller.addSprite(new Ball(e.getX(),e.getY()));
                 break;
             case MouseEvent.BUTTON3: controller.deleteSprite();
         }

@@ -3,7 +3,7 @@ package ru.geekbrains.java2.lesson1;
 import java.awt.*;
 
 public class GameController {
-    int numOfBalls = 0;
+    int numOfBalls = 1;
     Sprite[] sprites = new Sprite[10];
 
     GameController() {
@@ -36,8 +36,7 @@ public class GameController {
             System.arraycopy(sprites,0,temp,0,sprites.length);
             sprites = temp;
         }
-        numOfBalls++;
-        sprites[numOfBalls] = s;
+        sprites[numOfBalls++] = s;
     }
 
     public void deleteSprite() {

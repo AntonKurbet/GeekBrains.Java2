@@ -40,16 +40,15 @@ public class ExceptionTest {
     }
     private static float processMatrix(String[][] m) throws NumberConvertException {
         float result = 0.0f;
-        int[][] temp = new int[m.length][];
+        int temp;
         for (int i = 0; i < m.length; i++) {
-            temp[i] = new int[m[i].length];
             for (int j = 0; j < m[i].length; j++) {
                 try {
-                    temp[i][j] = Integer.parseInt(m[i][j]);
+                    temp = Integer.parseInt(m[i][j]);
                 } catch (NumberFormatException e){
                     throw new NumberConvertException(String.format("Incorrect number %s",m[i][j]));
                 }
-                result += temp[i][j];
+                result += temp;
             }
         }
         result /= 2f;
@@ -64,9 +63,9 @@ public class ExceptionTest {
 //5. * Написать собственные классы исключений для каждого из случаев
 
     public static void main(String[] args) {
-        //String s = "10 3 1 2\n2 3 2 2\n5 6 7 1\n300 3 1 0";
+        String s = "10 3 1 2\n2 3 2 2\n5 6 7 1\n300 3 1 0";
         //String s = "10 3 1 2\n2 3 3 2 2\n5 6 7 1\n300 3 1 0";
-        String s = "10 3 1 2\n2 x 2 2\n5 6 7 1\n300 3 1 0";
+        //String s = "10 3 1 2\n2 x 2 2\n5 6 7 1\n300 3 1 0";
 
         String[][] m = new String[0][];
         float r = 0;
@@ -75,12 +74,12 @@ public class ExceptionTest {
             m = createMatrix(s);
             r = processMatrix(m);
         } catch (DimensionException e) {
-            System.out.printf("Error creating matrix: %s%n",e.getMessage());
+            System.out.printf("Error creating matrix: %s%n\n",e.getMessage());
         } catch (NumberConvertException e) {
-            System.out.printf("Error processing matrix: %s",e.getMessage());
+            System.out.printf("Error processing matrix: %s\n",e.getMessage());
         }
-        System.out.println(Arrays.deepToString(m));
-        System.out.println(r);
+        System.out.println("Matrix:\n" + Arrays.deepToString(m));
+        System.out.println("Result is: " + r);
     }
 
 }

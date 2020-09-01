@@ -12,13 +12,13 @@ public class ExceptionTest {
 //    Написать метод, на вход которого подаётся такая строка,
 //    метод должен преобразовать строку в  двумерный массив типа String[][];
 
-    static class DimensionException extends Throwable {
+    static class DimensionException extends RuntimeException {
         DimensionException(String message) {
             super (message);
         }
     }
 
-    private static String[][] createMatrix(String s) throws DimensionException {
+    private static String[][] createMatrix(String s) {
         String[][] result;
         String[] temp = s.split("\n");
         if (temp.length != 4)
@@ -33,7 +33,7 @@ public class ExceptionTest {
     }
 //2. Преобразовать все элементы массива в числа типа int, просуммировать,
 //   поделить полученную сумму на 2, и вернуть результат;
-    static class NumberConvertException extends Throwable {
+    static class NumberConvertException extends Exception {
         NumberConvertException(String message) {
             super(message);
         }

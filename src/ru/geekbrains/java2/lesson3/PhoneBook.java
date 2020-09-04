@@ -12,17 +12,24 @@ import java.util.Map;
 
 public class PhoneBook {
     private HashMap<String,ArrayList<String>> book = new HashMap<>();
+    private HashMap<String,String> invertedBook = new HashMap<>();
 
     public void add(String personName, String phoneNumber) {
         ArrayList<String> list = book.get(personName);
         if (list == null) list = new ArrayList<>();
         list.add(phoneNumber);
         book.put(personName,list);
+
+        invertedBook.put(phoneNumber,personName);
     }
 
     public ArrayList<String> get (String personName) {
         ArrayList<String> phones = book.get(personName);
         if (phones == null) phones = new ArrayList<>();
         return phones;
+    }
+
+    public String getName (String phoneNumber) {
+        return invertedBook.get(phoneNumber);
     }
 }

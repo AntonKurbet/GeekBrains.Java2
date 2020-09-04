@@ -1,9 +1,6 @@
 package ru.geekbrains.java2.lesson3;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
+import java.util.*;
 
 
 public class Main {
@@ -17,9 +14,18 @@ public class Main {
     }
 
     //    Посчитать сколько раз встречается каждое слово.
-    private static int countOccurs(ArrayList<String> words, String s) {
-        return words.lastIndexOf(s) - words.indexOf(s) + 1;
-    }
+//    private static int countOccurs(LinkedList<String> words, String s) {
+//        int index = words.indexOf(s);
+//        if (index == -1) return 0;
+//        if (index == words.size() - 1) return 1;
+//        int result = 0;
+//        while (words.listIterator(index++).next().equals(s)) result++;
+//        return result;
+//    }
+
+//    private static int countOccurs(ArrayList<String> words, String s) {
+//        return words.lastIndexOf(s) - words.indexOf(s) + 1;
+//    }
 
     public static void main(String[] args) {
         String text = "Two reference types are the same compile-time type if they have the same binary name " +
@@ -34,15 +40,24 @@ public class Main {
         System.out.println(uniqWord);
         System.out.printf("%d words are unique\n",uniqWord.size());
 
-        ArrayList<String> sortedWords = new ArrayList<>(Arrays.asList(words));
-        sortedWords.sort(String.CASE_INSENSITIVE_ORDER);
-        int totalWords = 0;
-        for (String s : uniqWord) {
-            int c = countOccurs(sortedWords,s);
-            System.out.printf("the word '%s' occurs %d times\n",s,c);
-            totalWords += c;
+
+        //ArrayList<String> sortedWords = new ArrayList<>(Arrays.asList(words));
+        //LinkedList<String> sortedWords = new LinkedList<>(Arrays.asList(words));
+//        int totalWords = 0;
+//        sortedWords.sort(String.CASE_INSENSITIVE_ORDER);
+//        for (String s : uniqWord) {
+//            int c = countOccurs(sortedWords,s);
+//            System.out.printf("the word '%s' occurs %d times\n",s,c);
+//            totalWords += c;
+//        }
+//        System.out.printf("Total: %d\n", totalWords);
+
+        HashMap<String,Integer> wordsMap = new HashMap<>();
+        for (int i = 0; i < words.length; i++) {
+            int n = wordsMap.getOrDefault(words[i],0);
+            wordsMap.put(words[i],++n);
         }
-        System.out.printf("Total: %d\n", totalWords);
+        System.out.println(wordsMap);
 
         String[] names = {"Ivanov","Petrov","Vasiliev"};
         PhoneBook myPhones = new PhoneBook();
@@ -58,5 +73,7 @@ public class Main {
         }
 
         System.out.println("Kurbet phone is " + myPhones.get("Kurbet"));
+
+        System.out.println("+79101234567 is " + myPhones.getName("+79101234567") + " phone");
     }
 }

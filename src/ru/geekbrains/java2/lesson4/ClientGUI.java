@@ -4,6 +4,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class ClientGUI extends JFrame implements ActionListener, Thread.UncaughtExceptionHandler {
 
@@ -27,6 +33,10 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
 
     private final JList<String> userList = new JList<>();
 
+    private final static String LOG_FILENAME = "messages.txt";
+    private final File logFile;
+
+    private SimpleDateFormat sdfTime = new SimpleDateFormat("HH:mm:ss");
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
@@ -42,14 +52,18 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setSize(WIDTH, HEIGHT);
-//        log.setEditable(false);
+
+        log.setEditable(false);
         JScrollPane scrollUser = new JScrollPane(userList);
         JScrollPane scrollLog = new JScrollPane(log);
         String[] users = {"user1", "user2", "user3", "user4", "user5",
                 "user_with_an_exceptionally_long_name_in_this_chat"};
         userList.setListData(users);
         scrollUser.setPreferredSize(new Dimension(100, 0));
+
         cbAlwaysOnTop.addActionListener(this);
+        tfMessage.addActionListener(this);
+        btnSend.addActionListener(this);
 
         panelTop.add(tfIPAddress);
         panelTop.add(tfPort);
@@ -67,6 +81,14 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
         add(panelBottom, BorderLayout.SOUTH);
 
         setVisible(true);
+
+        logFile = new File(LOG_FILENAME);
+        if (!logFile.exists())
+            try {
+                logFile.createNewFile();
+            } catch (IOException e) {
+                throw new RuntimeException("Can't create logfile: " + e.getMessage());
+            }
     }
 
     @Override
@@ -74,8 +96,33 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
         Object src = e.getSource();
         if (src == cbAlwaysOnTop) {
             setAlwaysOnTop(cbAlwaysOnTop.isSelected());
-        } else {
+        } else if (src == tfMessage || src == btnSend) {
+            Date now = new Date();
+
+            String text = String.format("%s %s\n",sdfTime.format(now),tfMessage.getText());
+            log.append(text);
+            sendMessage(text);
+            tfMessage.setText("");
+        }
+        else {
             throw new RuntimeException("Unknown source: " + src);
+        }
+    }
+
+    private void sendMessage(String text) {
+        // Send message logic
+        writeMessageLog(text);
+    }
+    private void writeMessageLog(String text)  {
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(logFile, true));
+
+            writer.write(text);
+            writer.flush();
+            writer.close();
+        }
+        catch (IOException e){
+            throw new RuntimeException("Can't write logfile: " + e.getMessage());
         }
     }
 

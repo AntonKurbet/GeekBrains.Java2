@@ -97,20 +97,24 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
         if (src == cbAlwaysOnTop) {
             setAlwaysOnTop(cbAlwaysOnTop.isSelected());
         } else if (src == tfMessage || src == btnSend) {
-            Date now = new Date();
-
-            String text = String.format("%s %s\n",sdfTime.format(now),tfMessage.getText());
-            log.append(text);
-            sendMessage(text);
-            tfMessage.setText("");
+            if (!tfMessage.getText().equals(""))
+                sendMessage();
         }
         else {
             throw new RuntimeException("Unknown source: " + src);
         }
     }
 
-    private void sendMessage(String text) {
+    private void sendMessage() {
+
+        Date now = new Date();
+        String text = String.format("%s %s %s\n",tfLogin.getText(),sdfTime.format(now),tfMessage.getText());
+        tfMessage.setText("");
+        tfMessage.requestFocus();
+        log.append(text);
+
         // Send message logic
+
         writeMessageLog(text);
     }
     private void writeMessageLog(String text)  {

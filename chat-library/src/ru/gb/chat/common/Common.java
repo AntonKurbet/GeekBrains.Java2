@@ -16,6 +16,9 @@ public class Common {
     // если мы вдруг не поняли, что за сообщение и не смогли разобрать
     public static final String TYPE_BROADCAST = "/bcast";
     // то есть сообщение, которое будет посылаться всем
+    public static final String USER_LIST = "/user_list";
+    public static final String TYPE_BCAST_CLIENT = "/client_msg";
+    public static final String TYPE_CLIENT_PRIVATE = "/private";
 
     public static String getAuthRequest(String login, String password) {
         return AUTH_REQUEST + DELIMITER + login + DELIMITER + password;
@@ -38,11 +41,17 @@ public class Common {
                 DELIMITER + src + DELIMITER + message;
     }
 
-    public static boolean isAuthMessage(String msg) {
-        return msg.startsWith(AUTH_ACCEPT + DELIMITER);
+    public static String getUserList(String users) {
+        return USER_LIST + DELIMITER + users;
     }
 
-    public static boolean isBCastMessage(String msg) {
-        return msg.startsWith(TYPE_BROADCAST + DELIMITER);
+    public static String getTypeBcastClient(String msg) {
+        return TYPE_BCAST_CLIENT + DELIMITER + msg;
     }
+
+    public static String getTypeClientPrivate(String sender, String recipient, String msg) {
+        return TYPE_CLIENT_PRIVATE + DELIMITER + sender +
+                DELIMITER + recipient + DELIMITER + msg;
+    }
+
 }
